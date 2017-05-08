@@ -467,10 +467,10 @@ MessageQueue_send(MessageQueue *self, PyObject *args, PyObject *keywords) {
        Python doesn't write to is zeroed out.
    */
 #if PY_MAJOR_VERSION > 2
-    static char args_format[] = "s*|Oi";
+    static char args_format[] = "s*|Ol";
     Py_buffer user_msg;
 #else
-    static char args_format[] = "s#|Oi";
+    static char args_format[] = "s#|Ol";
     typedef struct {
         char *buf;
         long len;
@@ -480,7 +480,7 @@ MessageQueue_send(MessageQueue *self, PyObject *args, PyObject *keywords) {
 #endif
     PyObject *py_block = NULL;
     int flags = 0;
-    int type = 1;
+    long type = 1;
     int rc;
     struct queue_message *p_msg = NULL;
     char *keyword_list[ ] = {"message", "block", "type", NULL};
